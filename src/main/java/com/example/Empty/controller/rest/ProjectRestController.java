@@ -5,6 +5,7 @@ import com.example.Empty.model.dto.CreatePersonRequest;
 import com.example.Empty.service.PersonService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -30,16 +31,20 @@ public class ProjectRestController {
 
     @Tag(name = "Search By id", description = "Get a person by search id")
     @GetMapping("api/persons/{id}")
-    public Person getPersonById(@PathVariable Long id) {
-        return personService.getById(id);
+    public ResponseEntity<Person> getPersonById(@PathVariable Long id) {
+        Person byId;
+        try {
+             byId = personService.getById(id);
+        }catch (RuntimeException e){
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(byId);
     }
+
 
 //    @Tag(name = "Update a person", description = "Update a person search by Id")
 //    @GetMapping("api/persons/{sid}")
 //    public Person UpdatePersonById(@PathVariable Long sid, @RequestBody CreatePersonRequest createPersonRequest) {
 //        return personService.updateById(sid, createPersonRequest);
 //    }
-
-
-
 }
