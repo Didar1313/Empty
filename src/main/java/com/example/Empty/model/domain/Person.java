@@ -1,27 +1,44 @@
 package com.example.Empty.model.domain;
 
+
 public class Person {
+
+    private Long id;
     private String fName;
     private String lName;
 
-    public Person(String fName, String lName) {
+
+    public Person(Long id, String fName, String lName) {
+        this.id = id;
         this.fName = fName;
         this.lName = lName;
     }
 
-    public String getName() {
+    public Person() {
+
+    }
+
+    public String getfName() {
         return fName;
     }
 
-    public void setName(String name) {
-        this.fName = name;
+    public void setfName(String fName) {
+        this.fName = fName;
     }
 
-    public String getAge() {
+    public String getlName() {
         return lName;
     }
 
-    public String setAge(String lName) {
-        return this.lName = lName;
+    public void setlName(String lName) {
+        this.lName = lName;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
