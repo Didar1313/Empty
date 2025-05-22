@@ -5,10 +5,7 @@ import com.example.Empty.model.dto.CreatePersonRequest;
 import com.example.Empty.service.PersonService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +22,24 @@ public class ProjectRestController {
         return personService.getAllPerson();
     }
 
-    @Tag(name = "Create a project", description = "Create a new Project")
+    @Tag(name = "Create a person", description = "Create a new Project")
     @PostMapping("api/persons")
     public Person createPerson(@RequestBody CreatePersonRequest personDTO) {
         return  personService.createPerson(personDTO);
     }
+
+    @Tag(name = "Search By id", description = "Get a person by search id")
+    @GetMapping("api/persons/{id}")
+    public Person getPersonById(@PathVariable Long id) {
+        return personService.getById(id);
+    }
+
+//    @Tag(name = "Update a person", description = "Update a person search by Id")
+//    @GetMapping("api/persons/{sid}")
+//    public Person UpdatePersonById(@PathVariable Long sid, @RequestBody CreatePersonRequest createPersonRequest) {
+//        return personService.updateById(sid, createPersonRequest);
+//    }
+
+
 
 }

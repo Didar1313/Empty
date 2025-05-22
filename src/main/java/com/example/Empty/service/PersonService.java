@@ -39,4 +39,17 @@ public class PersonService {
         String lName = savedEntity.getlName();
         return new Person(id, fName, lName);
     }
+
+    public Person getById(Long id){
+        PersonEntity personEntity = personRepository.findById(id).orElseThrow(()-> new RuntimeException("Person not found"));
+        return new Person(personEntity.getId(), personEntity.getfName(), personEntity.getlName());
+    }
+
+    public Person updateById(Long id, CreatePersonRequest createPersonRequest) {
+        PersonEntity entity = personRepository.findById(id).orElseThrow(()-> new RuntimeException("Person not found"));
+        entity.setfName(createPersonRequest.getfName());
+        entity.setlName(createPersonRequest.getlName());
+        PersonEntity savedEntity = personRepository.save(entity);
+        return new Person(savedEntity.getId(), savedEntity.getfName(), savedEntity.getlName());
+    }
 }
