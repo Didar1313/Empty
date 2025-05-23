@@ -1,5 +1,6 @@
 package com.example.Empty.controller.rest;
 
+import com.example.Empty.exception.NotFoundException;
 import com.example.Empty.model.domain.Person;
 import com.example.Empty.model.dto.CreatePersonRequest;
 import com.example.Empty.service.PersonService;
@@ -35,8 +36,10 @@ public class ProjectRestController {
         Person byId;
         try {
              byId = personService.getById(id);
-        }catch (RuntimeException e){
+        }catch (NotFoundException e){
             return ResponseEntity.notFound().build();
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(byId);
     }

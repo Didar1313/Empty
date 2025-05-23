@@ -1,5 +1,6 @@
 package com.example.Empty.service;
 
+import com.example.Empty.exception.NotFoundException;
 import com.example.Empty.model.domain.Person;
 import com.example.Empty.model.dto.CreatePersonRequest;
 import com.example.Empty.persistence.entity.PersonEntity;
@@ -40,8 +41,8 @@ public class PersonService {
         return new Person(id, fName, lName);
     }
 
-    public Person getById(Long id){
-        PersonEntity personEntity = personRepository.findById(id).orElseThrow(()-> new RuntimeException("Person not found"));
+    public Person getById(Long id) throws NotFoundException {
+        PersonEntity personEntity = personRepository.findById(id).orElseThrow(()-> new NotFoundException("Person not found"));
         return new Person(personEntity.getId(), personEntity.getfName(), personEntity.getlName());
     }
 
