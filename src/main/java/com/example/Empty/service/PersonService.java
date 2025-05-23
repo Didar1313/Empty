@@ -3,6 +3,7 @@ package com.example.Empty.service;
 import com.example.Empty.exception.NotFoundException;
 import com.example.Empty.model.domain.Person;
 import com.example.Empty.model.dto.CreatePersonRequest;
+import com.example.Empty.model.dto.UpdatePersonRequest;
 import com.example.Empty.persistence.entity.PersonEntity;
 import com.example.Empty.persistence.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +47,15 @@ public class PersonService {
         return new Person(personEntity.getId(), personEntity.getfName(), personEntity.getlName());
     }
 
-    public Person updateById(Long id, CreatePersonRequest createPersonRequest) {
+    public Person updateById(Long id, UpdatePersonRequest updatePersonRequest) {
         PersonEntity entity = personRepository.findById(id).orElseThrow(()-> new RuntimeException("Person not found"));
-        entity.setfName(createPersonRequest.getfName());
-        entity.setlName(createPersonRequest.getlName());
+        entity.setfName(updatePersonRequest.getfName());
         PersonEntity savedEntity = personRepository.save(entity);
         return new Person(savedEntity.getId(), savedEntity.getfName(), savedEntity.getlName());
+    }
+
+    public void deletePerson(Long id) {
+        PersonEntity entity = personRepository.findById(id).orElseThrow(()-> new RuntimeException("Person not found"));
+        personRepository.delete(entity);
     }
 }

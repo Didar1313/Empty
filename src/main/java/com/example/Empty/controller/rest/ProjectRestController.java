@@ -3,8 +3,10 @@ package com.example.Empty.controller.rest;
 import com.example.Empty.exception.NotFoundException;
 import com.example.Empty.model.domain.Person;
 import com.example.Empty.model.dto.CreatePersonRequest;
+import com.example.Empty.model.dto.UpdatePersonRequest;
 import com.example.Empty.service.PersonService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,9 +47,17 @@ public class ProjectRestController {
     }
 
 
-//    @Tag(name = "Update a person", description = "Update a person search by Id")
-//    @GetMapping("api/persons/{sid}")
-//    public Person UpdatePersonById(@PathVariable Long sid, @RequestBody CreatePersonRequest createPersonRequest) {
-//        return personService.updateById(sid, createPersonRequest);
-//    }
+     @Tag(name = "Update a person", description = "Update a person search by Id")
+     @PutMapping("api/persons/{id}")
+     public Person updatePersonById(@PathVariable Long id, @RequestBody UpdatePersonRequest updatePersonRequest) {
+        return personService.updateById(id, updatePersonRequest);
+    }
+    @Tag(name = "Update a person", description = "Update a person search by Id")
+    @DeleteMapping("api/persons/{id}")
+    public String deletePersonById(@PathVariable Long id) {
+         personService.deletePerson(id);
+         return "Deleted person with id: " + id;
+    }
+
+
 }
