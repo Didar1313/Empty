@@ -42,13 +42,13 @@ public class PersonService {
         return new Person(id, fName, lName);
     }
 
-    public Person getById(Long id) throws NotFoundException {
+    public Person getById(Long id) {
         PersonEntity personEntity = personRepository.findById(id).orElseThrow(()-> new NotFoundException("Person not found"));
         return new Person(personEntity.getId(), personEntity.getfName(), personEntity.getlName());
     }
 
     public Person updateById(Long id, UpdatePersonRequest updatePersonRequest) {
-        PersonEntity entity = personRepository.findById(id).orElseThrow(()-> new RuntimeException("Person not found"));
+        PersonEntity entity = personRepository.findById(id).orElseThrow(()-> new NotFoundException("Person not found"));
         entity.setfName(updatePersonRequest.getfName());
         PersonEntity savedEntity = personRepository.save(entity);
         return new Person(savedEntity.getId(), savedEntity.getfName(), savedEntity.getlName());
