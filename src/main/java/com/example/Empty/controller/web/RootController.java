@@ -45,7 +45,7 @@ public class RootController {
         model.addAttribute("experience", experience);
 
         // Skills
-        List<String> skills = Arrays.asList("Java", "Spring Boot", "Microservices", "PostgreSQL", "Thymeleaf", "Tailwind CSS");
+        List<String> skills = Arrays.asList("Java", "Spring Boot", "Thymeleaf");
         model.addAttribute("skills", skills);
 
         return "index";

@@ -117,7 +117,7 @@
             <div class="neubrutalist-card p-4 resume-section">
                 <h2>Education</h2>
                 <div class="resume-item" th:each="edu : ${education}">
-                    <h4> <span th:text="${edu.degree}"></span> B.S. in Computer Science</h4>
+                    <h4> <span th:text="${edu.degree}">B.Sc in Computer Science</span></h4>
                     <p><strong>Green University of Bangladesh</strong> | <span th:text="${edu.years}">2021 - 2025</span></p>
                     <p th:text="${edu.description}">Graduated with honors, focusing on software engineering and distributed systems.</p>>
                 </div>
