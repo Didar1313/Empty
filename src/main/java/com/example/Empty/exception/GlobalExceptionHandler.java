@@ -6,10 +6,11 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(NotFoundException.class)
+    @ExceptionHandler({NoResourceFoundException.class, NotFoundException.class}) // Multiple Exceptions Handling
     public ProblemDetail handleNotFoundException(NotFoundException e) {
         return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_GATEWAY, e.getMessage());
     }
@@ -19,5 +20,9 @@ public class GlobalExceptionHandler {
         return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_GATEWAY, "Not Valid Input");
     }
 
+    @ExceptionHandler(Exception.class)
+    ProblemDetail handleException(Exception e) {
+        return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+    }
 
 }
