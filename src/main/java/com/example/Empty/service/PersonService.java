@@ -2,7 +2,7 @@ package com.example.Empty.service;
 
 import com.example.Empty.exception.custom.NotFoundException;
 import com.example.Empty.model.domain.Person;
-import com.example.Empty.model.dto.CreatePersonRequest;
+import com.example.Empty.model.dto.CreatePersonRequestRecord;
 import com.example.Empty.model.dto.UpdatePersonRequest;
 import com.example.Empty.persistence.entity.PersonEntity;
 import com.example.Empty.persistence.repository.PersonRepository;
@@ -27,12 +27,12 @@ public class PersonService {
         }).toList();
     }
 
-    public Person createPerson(CreatePersonRequest createPersonRequest){
+    public Person createPerson(CreatePersonRequestRecord createPersonRequest){
 
 
         PersonEntity entity = new PersonEntity();
-        entity.setfName(createPersonRequest.getfName());
-        entity.setlName(createPersonRequest.getlName());
+        entity.setfName(createPersonRequest.fName());
+        entity.setlName(createPersonRequest.lName());
 
         PersonEntity savedEntity = personRepository.save(entity);
 

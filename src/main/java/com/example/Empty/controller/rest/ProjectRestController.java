@@ -1,6 +1,6 @@
 package com.example.Empty.controller.rest;
 import com.example.Empty.model.domain.Person;
-import com.example.Empty.model.dto.CreatePersonRequest;
+import com.example.Empty.model.dto.CreatePersonRequestRecord;
 import com.example.Empty.model.dto.UpdatePersonRequest;
 import com.example.Empty.service.PersonService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -23,7 +23,7 @@ public class ProjectRestController {
 
     @Tag(name = "Create person", description = "Create a new Project")
     @PostMapping("api/persons")
-    public Person createPerson(@RequestBody CreatePersonRequest personDTO) {
+    public Person createPerson(@RequestBody CreatePersonRequestRecord personDTO) {
         return  personService.createPerson(personDTO);
     }
 
