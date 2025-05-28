@@ -49,7 +49,7 @@ public class PersonService {
 
     public Person updateById(Long id, UpdatePersonRequest updatePersonRequest) {
         PersonEntity entity = personRepository.findById(id).orElseThrow(()-> new NotFoundException("Person not found"));
-        entity.setfName(updatePersonRequest.getfName());
+        entity.setfName(updatePersonRequest.lName());
         PersonEntity savedEntity = personRepository.save(entity);
         return new Person(savedEntity.getId(), savedEntity.getfName(), savedEntity.getlName());
     }
