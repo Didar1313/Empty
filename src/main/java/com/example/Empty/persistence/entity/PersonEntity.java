@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
+
 @Getter
 @Entity
 public class PersonEntity {
@@ -15,6 +16,9 @@ public class PersonEntity {
     private String fName;
     @Setter
     private String lName;
+
+
+
 
 
 }

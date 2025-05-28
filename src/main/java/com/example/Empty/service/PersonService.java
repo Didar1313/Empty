@@ -22,7 +22,7 @@ public class PersonService {
     public List<Person>getAllPerson(){
         List<PersonEntity> personEntities= personRepository.findAll();
         return personEntities.stream().map(personEntity -> {
-            Person person = new Person(personEntity.getId(),personEntity.getfName(),personEntity.getlName());
+            Person person = new Person(personEntity.getId(),personEntity.getFName(),personEntity.getLName());
             return person;
         }).toList();
     }
@@ -31,27 +31,27 @@ public class PersonService {
 
 
         PersonEntity entity = new PersonEntity();
-        entity.setfName(createPersonRequest.fName());
-        entity.setlName(createPersonRequest.lName());
+        entity.setFName(createPersonRequest.fName());
+        entity.setLName(createPersonRequest.lName());
 
         PersonEntity savedEntity = personRepository.save(entity);
 
         Long id = savedEntity.getId();
-        String fName = savedEntity.getfName();
-        String lName = savedEntity.getlName();
+        String fName = savedEntity.getFName();
+        String lName = savedEntity.getLName();
         return new Person(id, fName, lName);
     }
 
     public Person getById(Long id) {
         PersonEntity personEntity = personRepository.findById(id).orElseThrow(()-> new NotFoundException("Person not found"));
-        return new Person(personEntity.getId(), personEntity.getfName(), personEntity.getlName());
+        return new Person(personEntity.getId(), personEntity.getFName(), personEntity.getLName());
     }
 
     public Person updateById(Long id, UpdatePersonRequest updatePersonRequest) {
         PersonEntity entity = personRepository.findById(id).orElseThrow(()-> new NotFoundException("Person not found"));
-        entity.setfName(updatePersonRequest.lName());
+        entity.setLName(updatePersonRequest.lName());
         PersonEntity savedEntity = personRepository.save(entity);
-        return new Person(savedEntity.getId(), savedEntity.getfName(), savedEntity.getlName());
+        return new Person(savedEntity.getId(), savedEntity.getFName(), savedEntity.getLName());
     }
 
     public void deletePerson(Long id) {
