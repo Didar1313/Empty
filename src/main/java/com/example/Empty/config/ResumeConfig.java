@@ -1,8 +1,8 @@
 package com.example.Empty.config;
 
-import com.example.Empty.personalInfoData.Education;
-import com.example.Empty.personalInfoData.Experience;
-import com.example.Empty.personalInfoData.PersonalInfo;
+import com.example.Empty.config.personalInfoData.Education;
+import com.example.Empty.config.personalInfoData.Experience;
+import com.example.Empty.config.personalInfoData.PersonalInfo;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 

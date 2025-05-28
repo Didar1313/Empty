@@ -1,4 +1,4 @@
-package com.example.Empty.personalInfoData;
+package com.example.Empty.config.personalInfoData;
 
 public class Education {
 

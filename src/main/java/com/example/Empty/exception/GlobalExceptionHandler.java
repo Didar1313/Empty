@@ -1,5 +1,6 @@
 package com.example.Empty.exception;
 
+import com.example.Empty.exception.custom.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.bind.MethodArgumentNotValidException;

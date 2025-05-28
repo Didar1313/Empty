@@ -1,5 +1,4 @@
 package com.example.Empty.controller.rest;
-import com.example.Empty.exception.NotFoundException;
 import com.example.Empty.model.domain.Person;
 import com.example.Empty.model.dto.CreatePersonRequest;
 import com.example.Empty.model.dto.UpdatePersonRequest;
