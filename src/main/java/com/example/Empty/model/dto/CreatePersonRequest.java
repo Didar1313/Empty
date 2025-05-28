@@ -1,8 +1,8 @@
 package com.example.Empty.model.dto;
 
-public class CreatePersonRequest {
-    private String fName;
-    private String lName;
+public final class CreatePersonRequest {
+    private final String fName;
+    private final String lName;
 
     public CreatePersonRequest(String fName, String lName) {
         this.fName = fName;
@@ -13,15 +13,8 @@ public class CreatePersonRequest {
         return fName;
     }
 
-    public void setfName(String fName) {
-        this.fName = fName;
-    }
-
     public String getlName() {
         return lName;
     }
 
-    public void setlName(String lName) {
-        this.lName = lName;
-    }
 }
