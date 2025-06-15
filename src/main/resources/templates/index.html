@@ -142,6 +142,15 @@
             </div>
         </div>
 
+        <!-- Projects -->
+        <div class="neubrutalist-card p-4 resume-section">
+            <h2>Projects</h2>
+            <div class="resume-item" th:each="person : ${persons}">
+                <h4 th:text="${person.getFName()}">Personal Portfolio</h4>
+                <p th:text="${person.getLName()}">Developed Personal Portfolio & Blog Management System using Spring Boot and monolith architecture.</p>
+            </div>
+        </div>
+
         <div class="col-lg-4">
             <div class="sidebar">
                 <h3>Navigation</h3>
