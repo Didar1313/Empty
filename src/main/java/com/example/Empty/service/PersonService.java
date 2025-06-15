@@ -7,6 +7,7 @@ import com.example.Empty.model.dto.UpdatePersonRequest;
 import com.example.Empty.persistence.entity.PersonEntity;
 import com.example.Empty.persistence.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 
@@ -19,7 +20,8 @@ public class PersonService {
      PersonRepository personRepository;
 
 
-    public List<Person>getAllPerson(){
+    public List<Person>getAllPerson(Pageable pageable){
+
         List<PersonEntity> personEntities= personRepository.findAll();
         return personEntities.stream().map(personEntity -> {
             Person person = new Person(personEntity.getId(),personEntity.getFName(),personEntity.getLName());
@@ -28,7 +30,6 @@ public class PersonService {
     }
 
     public Person createPerson(CreatePersonRequestRecord createPersonRequest){
-
 
         PersonEntity entity = new PersonEntity();
         entity.setFName(createPersonRequest.fName());

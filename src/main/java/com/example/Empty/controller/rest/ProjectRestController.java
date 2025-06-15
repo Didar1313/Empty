@@ -4,8 +4,11 @@ import com.example.Empty.model.dto.CreatePersonRequestRecord;
 import com.example.Empty.model.dto.UpdatePersonRequest;
 import com.example.Empty.service.PersonService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -17,8 +20,8 @@ public class ProjectRestController {
 
     @Tag(name = "Get Person List", description = "Get all the person list at a time")
     @GetMapping("api/persons")
-    public List<Person> getAllPerson() {
-        return personService.getAllPerson();
+    public List<Person> getAllPerson(@ParameterObject Pageable pageable) {
+        return personService.getAllPerson(pageable);
     }
 
     @Tag(name = "Create person", description = "Create a new Project")
