@@ -54,6 +54,12 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- Markdown -->
+		<dependency>
+			<groupId>com.atlassian.commonmark</groupId>
+			<artifactId>commonmark</artifactId>
+			<version>0.17.0</version>
+		</dependency>
 
 <!--Third party Dependency-->
 		<dependency>
