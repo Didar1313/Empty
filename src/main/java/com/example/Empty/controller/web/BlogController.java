@@ -182,11 +182,6 @@ public class BlogController {
 
 
 
-    @GetMapping
-    public String indexPage() {
-        return "blog/index";
-    }
-
     @GetMapping("{id}")
     public String detailPage(@PathVariable Long id, Model model) {
         // Find post by ID
