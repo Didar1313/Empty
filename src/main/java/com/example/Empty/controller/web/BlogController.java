@@ -92,7 +92,47 @@ public class BlogController {
             This is a basic example. For production, consider tuning parameters like queue size and rejection policies based on your application’s needs.
             """);
 
+        Post post2 = new Post();
+        post2.setId(2L);
+        post2.setTitle("Understanding Spring Boot Autoconfiguration");
+        post2.setAuthor("Author");
+        post2.setCreatedAt(new Date());
+        post2.setCreatedAtFormatted(dateFormat.format(post2.getCreatedAt()));
+        post2.setContent("""
+        # Spring Boot Autoconfiguration Demystified
+
+        Spring Boot’s autoconfiguration mechanism simplifies setup by guessing what you want and wiring it for you. It uses classpath inspection and default settings to reduce boilerplate.
+
+        ## Key Features:
+        - Automatically configures beans based on libraries in the classpath
+        - Can be overridden with custom configuration
+        - Helps reduce `applicationContext.xml` or manual `@Bean` definitions
+
+        ## Example:
+        Just include `spring-boot-starter-web` in your `pom.xml` or `build.gradle` and Spring Boot sets up:
+        - Embedded Tomcat
+        - DispatcherServlet
+        - Jackson for JSON
+        - And more...
+
+        ```java
+        @RestController
+        public class HelloController {
+            @GetMapping("/")
+            public String hello() {
+                return "Hello, Spring Boot!";
+            }
+        }
+        ```
+
+        ## Why It Matters:
+        Spring Boot helps you focus on logic, not configuration. But knowing how autoconfiguration works helps in debugging and fine-tuning.
+
+        🔍 Want to explore? Use `@EnableAutoConfiguration` and `spring-boot-actuator` to inspect what's auto-configured.
+        """);
+
         posts.add(post1);
+        posts.add(post2);
         return posts;
     }
 
@@ -116,10 +156,31 @@ public class BlogController {
         comment2.setCreatedAt(new Date());
         comment2.setCreatedAtFormatted(dateFormat.format(comment2.getCreatedAt()));
 
+        //  New comments for post ID 2
+        Comment comment3 = new Comment();
+        comment3.setId(3L);
+        comment3.setPostId(2L);
+        comment3.setAuthor("Alex Lee");
+        comment3.setContent("Really helpful breakdown of Spring Boot auto-config!");
+        comment3.setCreatedAt(new Date());
+        comment3.setCreatedAtFormatted(dateFormat.format(comment3.getCreatedAt()));
+
+        Comment comment4 = new Comment();
+        comment4.setId(4L);
+        comment4.setPostId(2L);
+        comment4.setAuthor("Emily Chen");
+        comment4.setContent("The sample code made it very easy to understand. Thanks!");
+        comment4.setCreatedAt(new Date());
+        comment4.setCreatedAtFormatted(dateFormat.format(comment4.getCreatedAt()));
+
         comments.add(comment1);
         comments.add(comment2);
+        comments.add(comment3);
+        comments.add(comment4);
         return comments;
     }
+
+
 
     @GetMapping
     public String indexPage() {
