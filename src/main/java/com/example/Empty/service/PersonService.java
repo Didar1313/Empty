@@ -1,11 +1,13 @@
 package com.example.Empty.service;
 
 import com.example.Empty.exception.custom.NotFoundException;
+import com.example.Empty.mapper.PersonMapper;
 import com.example.Empty.model.domain.Person;
 import com.example.Empty.model.dto.CreatePersonRequestRecord;
 import com.example.Empty.model.dto.UpdatePersonRequest;
 import com.example.Empty.persistence.entity.PersonEntity;
 import com.example.Empty.persistence.repository.PersonRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,14 +20,17 @@ public class PersonService {
 
     @Autowired
      PersonRepository personRepository;
+    @Autowired
+    PersonMapper personMapper;
 
 
-    public List<Person>getAllPerson(Pageable pageable){
 
-        List<PersonEntity> personEntities= personRepository.findAll();
-        return personEntities.stream().map(personEntity -> {
-            Person person = new Person(personEntity.getId(),personEntity.getFName(),personEntity.getLName());
-            return person;
+    public List<Person> getAllPerson(Pageable pageable) {
+        List<PersonEntity> entityList = personRepository.findAll(pageable).getContent();
+        return entityList.stream().map(entity -> {
+            Person domain = new Person();
+            BeanUtils.copyProperties(entity, domain);
+            return domain;
         }).toList();
     }
 
