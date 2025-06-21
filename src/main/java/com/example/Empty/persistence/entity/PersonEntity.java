@@ -5,16 +5,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
-
+import org.springframework.stereotype.Component;
+@Setter
 @Getter
 @Entity
 public class PersonEntity {
     @Id
     @GeneratedValue
     private Long id;
-    @Setter
     private String fName;
-    @Setter
     private String lName;
 
 
