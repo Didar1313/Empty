@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class ProjectRestController {
+public class PersonRestController {
 
     @Autowired
     PersonService personService;
@@ -25,8 +25,8 @@ public class ProjectRestController {
 
     @Tag(name = "Create person", description = "Create a new Project")
     @PostMapping("api/persons")
-    public Person createPerson(@RequestBody CreatePersonRequestRecord personDTO) {
-        return  personService.createPerson(personDTO);
+    public void createPerson(@RequestBody CreatePersonRequestRecord personDTO) {
+          personService.createPerson(personDTO);
     }
 
     @Tag(name = "Search By id", description = "Get a person by search id")
