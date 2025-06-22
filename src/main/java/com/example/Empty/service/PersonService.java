@@ -17,12 +17,14 @@ import java.util.List;
 @Service
 public class PersonService {
 
-    @Autowired
-     PersonRepository personRepository;
-    @Autowired
-    PersonMapper personMapper;
 
+    private final PersonRepository personRepository;
+    private final PersonMapper personMapper;
 
+    public PersonService(PersonRepository personRepository, PersonMapper personMapper) {
+        this.personRepository = personRepository;
+        this.personMapper = personMapper;
+    }
 
     public List<Person> getAllPerson(Pageable pageable) {
         List<PersonEntity> entityList = personRepository.findAll(pageable).getContent();
