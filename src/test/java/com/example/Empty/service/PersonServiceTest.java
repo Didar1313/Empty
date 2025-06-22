@@ -8,14 +8,17 @@ import com.example.Empty.persistence.repository.PersonRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)  //t automatically initializes all the @Mock and @InjectMocks fields before each test method runs.
 class PersonServiceTest {
 
     @InjectMocks
@@ -27,10 +30,7 @@ class PersonServiceTest {
     @Mock
     private PersonMapper personMapper;
 
-    @BeforeEach
-    public void setup() {
-        MockitoAnnotations.openMocks(this);
-    }
+
 
     @Test
     void given_valid_id_return_a_person() throws NotFoundException {
