@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageImpl;
@@ -94,4 +95,41 @@ class PersonServiceTest {
         Assertions.assertEquals(expectedFirstName, actualPerson.getFName());
         Assertions.assertEquals(expectedLastName, actualPerson.getLName());
     }
+
+    @Test
+    void deleteProject_deletes_when_project_exists() {
+        // given
+        Long projectId = 1L;
+        PersonEntity entity = new PersonEntity();
+        entity.setId(projectId);
+        entity.setFName("Test Project");
+        entity.setLName("Test Description");
+
+        when(personRepository.findById(projectId)).thenReturn(Optional.of(entity));
+
+        // when
+        personService.deletePerson(projectId);
+
+        // then
+        Mockito.verify(personRepository).delete(entity);
+        Mockito.verify(personRepository).findById(projectId);
+    }
+
+    @Test
+    void deletePerson_throws_Exception_when_person_not_found() {
+        // given
+        Long invalidPersonId = 99L;
+
+        when(personRepository.findById(invalidPersonId)).thenReturn(Optional.empty());
+
+        // then
+        Assertions.assertThrows(RuntimeException.class, () -> personService.deletePerson(invalidPersonId));
+
+        // verify
+        Mockito.verify(personRepository).findById(invalidPersonId);
+        Mockito.verify(personRepository, Mockito.never()).deleteById(Mockito.any());
+    }
+
+
+
 }
