@@ -38,6 +38,13 @@ public class PersonService {
         return personMapper.entityToDomain(savedEntity);
     }
 
+    /**
+     * Retrieves a `Person` by their unique identifier.
+     *
+     * @param id the unique identifier of the person to be retrieved
+     * @return the `Person` corresponding to the given id
+     * @throws NotFoundException if no person is found with the specified id
+     */
     public Person getById(Long id) {
         PersonEntity personEntity = personRepository.findById(id).orElseThrow(()-> new NotFoundException("Person not found"));
         return personMapper.entityToDomain(personEntity);
