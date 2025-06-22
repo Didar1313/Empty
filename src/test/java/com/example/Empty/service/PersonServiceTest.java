@@ -3,16 +3,15 @@ package com.example.Empty.service;
 import com.example.Empty.exception.custom.NotFoundException;
 import com.example.Empty.mapper.PersonMapper;
 import com.example.Empty.model.domain.Person;
+import com.example.Empty.model.dto.CreatePersonRequestRecord;
 import com.example.Empty.persistence.entity.PersonEntity;
 import com.example.Empty.persistence.repository.PersonRepository;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -128,6 +127,40 @@ class PersonServiceTest {
         // verify
         Mockito.verify(personRepository).findById(invalidPersonId);
         Mockito.verify(personRepository, Mockito.never()).deleteById(Mockito.any());
+    }
+
+    @Test
+    void createPerson_saves_and_returns_saved_person_when_valid_request() {
+        // given
+        CreatePersonRequestRecord createPersonRequest = new CreatePersonRequestRecord("First", "Last");
+
+        PersonEntity incomingEntity = new PersonEntity();
+        incomingEntity.setFName(createPersonRequest.fName());
+        incomingEntity.setLName(createPersonRequest.lName());
+
+        PersonEntity savedEntity = new PersonEntity();
+        savedEntity.setId(1L);
+        savedEntity.setFName("First");
+        savedEntity.setLName("Last");
+
+        Person expectedPerson = new Person(1L, "First", "Last");
+
+        // Mock the mapper
+        when(personMapper.domainToEntity(createPersonRequest)).thenReturn(incomingEntity);
+
+        // Mock the repository
+        when(personRepository.save(incomingEntity)).thenReturn(savedEntity);
+
+        // Mock the mapper again for entity to domain conversion
+        when(personMapper.entityToDomain(savedEntity)).thenReturn(expectedPerson);
+
+        // when
+        Person createdPerson = personService.createPerson(createPersonRequest);
+
+        // then
+        Assertions.assertEquals(expectedPerson.getId(), createdPerson.getId());
+        Assertions.assertEquals(expectedPerson.getFName(), createdPerson.getFName());
+        Assertions.assertEquals(expectedPerson.getLName(), createdPerson.getLName());
     }
 
 
