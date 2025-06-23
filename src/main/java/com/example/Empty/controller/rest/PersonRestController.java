@@ -43,8 +43,8 @@ public class PersonRestController {
 
     @Operation(summary = "Update Person by ID")
      @PutMapping("api/persons/{id}")
-     public Person updatePersonById(@PathVariable Long id, @RequestBody UpdatePersonRequest updatePersonRequest) {
-        return personService.updateById(id, updatePersonRequest);
+     public void updatePersonById(@PathVariable Long id, @RequestBody UpdatePersonRequest updatePersonRequest) {
+         personService.updateById(id, updatePersonRequest);
     }
 
     @Operation(summary = "Delete Person by ID")
