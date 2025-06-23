@@ -34,7 +34,6 @@ public class PersonService {
     }
 
     public Person createPerson(CreatePersonRequestRecord createPersonRequest){
-
         PersonEntity entity = personMapper.domainToEntity(createPersonRequest);
         PersonEntity savedEntity = personRepository.save(entity);
         return personMapper.entityToDomain(savedEntity);
@@ -52,15 +51,24 @@ public class PersonService {
         return personMapper.entityToDomain(personEntity);
     }
 
-    public Person updateById(Long id, UpdatePersonRequest updatePersonRequest) {
-        PersonEntity entity = personRepository.findById(id).orElseThrow(()-> new NotFoundException("Person not found"));
-        entity.setLName(updatePersonRequest.lName());
-        PersonEntity savedEntity = personRepository.save(entity);
-        return new Person(savedEntity.getId(), savedEntity.getFName(), savedEntity.getLName());
-    }
+//    public Person updateById(Long id, UpdatePersonRequest updatePersonRequest) {
+//        PersonEntity entity = personRepository.findById(id).orElseThrow(()-> new NotFoundException("Person not found"));
+//        entity.setLName(updatePersonRequest.lName());
+//        PersonEntity savedEntity = personRepository.save(entity);
+//        return personMapper.entityToDomain(savedEntity);
+//    }
 
     public void deletePerson(Long id) {
         PersonEntity entity = personRepository.findById(id).orElseThrow(()-> new RuntimeException("Person not found"));
         personRepository.delete(entity);
     }
+
+    public void updateById(Long id, UpdatePersonRequest updatePersonRequest) {
+        PersonEntity entity = personRepository.findById(id).orElseThrow(()-> new NotFoundException("Person not found"));
+
+        var updatePersonEntity = personMapper.updateRequestToEntity(updatePersonRequest, entity);
+        personRepository.save(updatePersonEntity);
+    }
+
+
 }

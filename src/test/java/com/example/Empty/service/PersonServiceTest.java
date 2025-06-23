@@ -4,6 +4,7 @@ import com.example.Empty.exception.custom.NotFoundException;
 import com.example.Empty.mapper.PersonMapper;
 import com.example.Empty.model.domain.Person;
 import com.example.Empty.model.dto.CreatePersonRequestRecord;
+import com.example.Empty.model.dto.UpdatePersonRequest;
 import com.example.Empty.persistence.entity.PersonEntity;
 import com.example.Empty.persistence.repository.PersonRepository;
 import org.junit.jupiter.api.Assertions;
@@ -162,6 +163,42 @@ class PersonServiceTest {
         Assertions.assertEquals(expectedPerson.getFName(), createdPerson.getFName());
         Assertions.assertEquals(expectedPerson.getLName(), createdPerson.getLName());
     }
+
+    @Test
+    void updateProject_updates_description_when_project_exists() throws NotFoundException {
+        // given
+        Long projectId = 1L;
+        String newDescription = "Updated Description";
+        UpdatePersonRequest request = new UpdatePersonRequest(newDescription);
+
+        PersonEntity existingEntity = new PersonEntity();
+        existingEntity.setId(projectId);
+        existingEntity.setFName("Test Project");
+        existingEntity.setLName("Updated Description");
+
+        when(personRepository.findById(projectId)).thenReturn(Optional.of(existingEntity));
+
+        when(personMapper.updateRequestToEntity(request, existingEntity)).thenReturn(existingEntity);
+
+        // when
+        personService.updateById(projectId, request);
+
+        // then
+        Assertions.assertEquals(newDescription, existingEntity.getLName());
+        Mockito.verify(personRepository).save(existingEntity);
+    }
+
+    @Test
+    void updateProject_throws_NotFoundException_when_project_not_found() {
+        // given
+        Long projectId = 999L;
+        UpdatePersonRequest request = new UpdatePersonRequest("Any Description");
+        when(personRepository.findById(projectId)).thenReturn(Optional.empty());
+
+        // when/then
+        Assertions.assertThrows(NotFoundException.class, () -> personService.updateById(projectId, request));
+    }
+
 
 
 
