@@ -121,23 +121,20 @@
     <div class="col-lg-8">
       <!-- Post Content -->
       <div class="neubrutalist-card p-4">
-        <h2 th:text="${post.title}">Exploring Java Concurrency with Thread Pools</h2>
-        <p class="post-meta" th:text="'Posted on ' + ${post.createdAt} + ' by ' + ${post.author}">Posted on May 17, 2025 by Author</p>
-        <div class="post-content" th:utext="${markdownContent}">
-          <!-- Markdown content will be rendered as HTML here -->
-        </div>
+        <h1 th:text="${post.title}"></h1>
+        <p>By <span th:text="${post.author}"></span> on <span th:text="${#dates.format(post.createdAt, 'MMMM dd, yyyy')}"></span></p>
+
+        <div th:utext="${markdownContent}"></div>
         <a href="/" class="btn btn-neubrutalist mt-3">Back to Home</a>
       </div>
       <!-- Comment Section -->
       <div class="neubrutalist-card p-4 comment-section">
-        <h3>Comments</h3>
-        <div th:each="comment : ${comments}" class="comment-item">
-          <p>
-            <strong th:text="${comment.author}">Jane Doe</strong> |
-            <span th:text="${comment.createdAt}">May 17, 2025</span>
-          </p>
-          <p th:text="${comment.content}">Great explanation of thread pools! The example was super clear.</p>
-        </div>
+        <h2>Comments</h2>
+        <ul>
+          <li th:each="comment : ${comments}">
+            <strong th:text="${comment.author}"></strong>: <span th:text="${comment.content}"></span>
+          </li>
+        </ul>
         <h4>Leave a Comment</h4>
         <form>
           <div class="mb-3">
@@ -157,7 +154,7 @@
         <h3>Navigation</h3>
         <ul class="list-unstyled">
           <li><a href="/" class="text-dark">Home</a></li>
-          <li><a href="resume" class="text-dark">Resume</a></li>
+          <li><a href="/resume" class="text-dark">Resume</a></li>
           <li><a href="/#contact" class="text-dark">Contact</a></li>
         </ul>
         <h3>Subscribe</h3>
