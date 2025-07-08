@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -28,6 +29,10 @@ public class PostService {
 
     public void createPost(CreatePostRequestRecord  createPostRequestRecord){
         PostEntity postEntity = postMapper.domainToEntity(createPostRequestRecord);
+        postEntity.setIntro(getIntroForContent(postEntity.getContent()));
+        if (createPostRequestRecord.published()) {
+            postEntity.setPublishedAt(LocalDateTime.now());
+        }
         postRepository.save(postEntity);
     }
 
@@ -51,6 +56,13 @@ public class PostService {
         return postRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Project not found"));
     }
-
+    private String getIntroForContent(String content){
+        if(content == null || content.isBlank()){
+           return "";
+        }
+        int limit = 300;
+        String suffix="...";
+        return content.length()<=limit?content:content.substring(0,limit)+suffix;
+    }
 
 }

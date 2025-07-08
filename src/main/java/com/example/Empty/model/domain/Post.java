@@ -1,14 +1,13 @@
 package com.example.Empty.model.domain;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 import java.time.LocalDateTime;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class Post {
     private Long id;
     private String title;
@@ -16,5 +15,6 @@ public class Post {
     private String slug;
     private Boolean published;
     private LocalDateTime publishedAt;
+    private String intro;
 
 }

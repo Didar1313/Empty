@@ -14,9 +14,13 @@ public class PostEntity {
     @GeneratedValue
     private Long id;
     private String title;
+    @Lob
+    @Column(name = "content", columnDefinition = "CLOB")
     private String content;
     private String slug;
     @Column(name = "is_published")
     private Boolean published;
     private LocalDateTime publishedAt;
+    @Column(length = 400)
+    private String intro;
 }
