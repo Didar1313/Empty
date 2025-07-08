@@ -3,6 +3,7 @@ package com.example.Empty.mapper;
 import com.example.Empty.model.domain.Post;
 import com.example.Empty.model.dto.CreatePostRequestRecord;
 
+import com.example.Empty.model.dto.UpdatePostRequestRecord;
 import com.example.Empty.persistence.entity.PostEntity;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,8 @@ public class PostMapper {
         return entity;
     }
 
-//    public PostEntity updateDataToEntity(UpdatePostRequestRecord updatePostRequestRecord) {
-//    }
+    public PostEntity updateRequestToEntity(UpdatePostRequestRecord request, PostEntity entity) {
+        entity.setContent(request.content());
+        return entity;
+    }
 }
