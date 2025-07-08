@@ -6,7 +6,9 @@ import com.example.Empty.model.dto.UpdatePostRequestRecord;
 import com.example.Empty.service.PostService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,8 +22,8 @@ public class PostController {
 
     @Operation(summary = "Get all posts")
     @GetMapping
-    public List<Post> getPost() {
-        return postService.getAllPost();
+    public List<Post> getPost(@ParameterObject Pageable pageable) {
+        return postService.getAllPost(pageable);
     }
 
     @Operation(summary = "Creat posts")
