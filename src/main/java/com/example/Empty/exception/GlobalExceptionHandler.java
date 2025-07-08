@@ -9,11 +9,17 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import java.net.URI;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler({NoResourceFoundException.class, NotFoundException.class}) // Multiple Exceptions Handling
+    @ExceptionHandler(NotFoundException.class)
     public ProblemDetail handleNotFoundException(NotFoundException e) {
-        return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_GATEWAY, e.getMessage());
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, e.getMessage());
+        problemDetail.setTitle("Resource Not Found");
+        problemDetail.setType(URI.create("https://example.com/not-found"));
+        problemDetail.setProperty("customProperty", "This is a custom property");
+        return problemDetail;
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
