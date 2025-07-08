@@ -1,11 +1,13 @@
 package com.example.Empty.service;
 
+import com.example.Empty.exception.custom.NotFoundException;
 import com.example.Empty.mapper.PostMapper;
 import com.example.Empty.model.domain.Post;
 import com.example.Empty.model.dto.CreatePostRequestRecord;
 import com.example.Empty.model.dto.UpdatePostRequestRecord;
 import com.example.Empty.persistence.entity.PostEntity;
 import com.example.Empty.persistence.repository.PostRepository;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,28 +24,31 @@ public class PostService {
     }
 
 
-    public List<Post> getAllPost(){
-        List<PostEntity>getPostData = postRepository.findAll();
-        return getPostData.stream().map(entity -> {
-            return postMapper.entityToDomain(entity);
-        }).toList();
+    public List<Post> getAllPost(Pageable pageable){
+        List<PostEntity>getPostData = postRepository.findAll(pageable).getContent();
+        return getPostData.stream().map(postMapper::entityToDomain).toList();
     }
 
-    public Post createPost(CreatePostRequestRecord  createPostRequestRecord){
+    public void createPost(CreatePostRequestRecord  createPostRequestRecord){
         PostEntity postEntity = postMapper.domainToEntity(createPostRequestRecord);
-        PostEntity savedEntity = postRepository.save(postEntity);
-       return postMapper.entityToDomain(savedEntity);
-    }
-
-    public void updatePost(Long id, UpdatePostRequestRecord updatePostRequestRecord) {
-        PostEntity postEntity = postRepository.findById(id).orElseThrow(()-> new RuntimeException("Post not found"));
-        postEntity.setContent(updatePostRequestRecord.content());
         postRepository.save(postEntity);
     }
 
-    public void deletePost(Long id) {
-        PostEntity postEntity = postRepository.findById(id).orElseThrow(()-> new RuntimeException("Post not found"));
-        postRepository.delete(postEntity);
+    public void updatePost(Long id, UpdatePostRequestRecord updatePostRequestRecord) throws NotFoundException {
+        PostEntity postEntity = this.findEntityById(id);
+        postMapper.updateRequestToEntity(updatePostRequestRecord, postEntity);
+        postRepository.save(postEntity);
     }
+
+    public void deletePost(Long id) throws NotFoundException{
+        this.findEntityById(id);
+        postRepository.deleteById(id);
+    }
+
+    private PostEntity findEntityById(Long id) throws NotFoundException {
+        return postRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Project not found"));
+    }
+
 
 }
