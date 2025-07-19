@@ -1,6 +1,7 @@
 package com.example.Empty.controller.web;
 
 import com.example.Empty.exception.custom.NotFoundException;
+import com.example.Empty.model.domain.Comment;
 import com.example.Empty.model.domain.Post;
 import com.example.Empty.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,16 @@ public class RootController {
 
     @GetMapping("/blog/detail/{id}")
     public String post(@PathVariable Long id, Model model) throws NotFoundException {
-        Post getPost=postService.getPostById(id);
-        model.addAttribute("post", getPost);
+        Post post = postService.getPostById(id);
+        List<Comment> comments = postService.getCommentList(id);
+
+        model.addAttribute("post", post);
+        model.addAttribute("comments", comments);
+        model.addAttribute("newComment", new Comment());
+
         return "/blog/detail";
     }
+
 
 
 }
