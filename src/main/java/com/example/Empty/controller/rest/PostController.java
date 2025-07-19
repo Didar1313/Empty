@@ -44,4 +44,10 @@ public class PostController {
         postService.deletePost(id);
     }
 
+    @Operation(summary = "Get Post by ID")
+    @GetMapping("/{id}")
+    public Post getPostById(@PathVariable Long id) {
+        return postService.getPostById(id);
+    }
+
 }
