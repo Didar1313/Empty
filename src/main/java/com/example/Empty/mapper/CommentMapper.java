@@ -15,6 +15,7 @@ public class CommentMapper {
 
     public Comment entityToDomain(CommentEntity entity) {
         Comment comment = new Comment();
+        comment.setId(entity.getId());
         comment.setName(entity.getName());
         comment.setText(entity.getText());
         return comment;
