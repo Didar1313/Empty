@@ -4,6 +4,7 @@ import com.example.Empty.model.domain.Comment;
 import com.example.Empty.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,4 +21,11 @@ public class CommentContrller {
         postService.saveComment(id, commentForm);
         return "redirect:/blog/detail/" + id;
     }
+
+    @PostMapping("/comment/delete/{cid}/{pid}")
+    public String commentDelete(@PathVariable Long cid, @PathVariable Long pid) {
+        postService.deleteComment(cid);
+        return "redirect:/blog/detail/" + pid;
+    }
+
 }
