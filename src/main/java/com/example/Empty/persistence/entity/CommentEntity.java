@@ -14,14 +14,11 @@ import lombok.Setter;
 public class CommentEntity {
     @Id
     @GeneratedValue
-    private Long commentId;
+    private Long id;
     private String name;
     private String text;
 
     @ManyToOne
     @JoinColumn(name = "post_id")
     private PostEntity post;
-
-
-
 }
