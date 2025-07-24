@@ -133,6 +133,12 @@
           <li th:each="comment : ${comments}">
             <strong th:text="${comment.name}">Author Name</strong>:
             <span th:text="${comment.text}">Comment text</span>
+            <!-- 🗑️ Delete Button -->
+            <form th:action="@{/comment/delete/{cid}/{pid}(cid=${comment.id}, pid=${post.id})}" method="post" style="display: inline;">
+              <button type="submit" title="Delete comment" style="background: none; border: none; cursor: pointer; color: red;">
+                🗑️
+              </button>
+            </form>
           </li>
         </ul>
 
