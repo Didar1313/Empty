@@ -91,4 +91,8 @@ public class PostService {
                 .toList();
     }
 
+    public String deleteComment(Long id) {
+        commentRepository.deleteById(id);
+        return "Comment deleted";
+    }
 }
